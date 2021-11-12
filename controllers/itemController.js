@@ -183,8 +183,8 @@ exports.destroy = async (req, res, next) => {
         let format = item.imageUrl.split('.')[item.imageUrl.split('.').length - 1];
         let imgName = item.imageUrl.split('.')[0].split('/')[item.imageUrl.split('.')[0].split('/').length - 1];
         await Item.destroy({ where: { id: req.params.id } });
-        const path = process.cwd() + '/public/assets/item-images/' + `${imgName}.${format}`;
         if (imgName !== 'default') {
+            const path = process.cwd() + '/public/assets/item-images/' + `${item.id}.${format}`;
             fs.unlink(path, (err) => {
                     if (err) {
                     next(err);

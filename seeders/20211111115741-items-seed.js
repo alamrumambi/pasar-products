@@ -1,6 +1,6 @@
 'use strict';
-const baseUrl = 'http://localhost:3000';
-// const baseUrl = 'https://harga-pangan.herokuapp.com';
+// const baseUrl = 'http://localhost:3000';
+const baseUrl = 'https://harga-pangan.herokuapp.com';
 
 module.exports = {
     up: async(queryInterface, Sequelize) => {
