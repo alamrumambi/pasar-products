@@ -1,12 +1,15 @@
 const router = require('express').Router();
-const { findAll, create, findById, updateItem, destroy } = require('../controllers/itemController');
+const { findAllForTable, getCreate, create, getUpdate, updateItem, destroy, search } = require('../controllers/itemController');
 const { authentication } = require('../middlewares/auth');
 
-router.get('/', findAll);
-router.get('/:id', findById);
+
 router.use(authentication);
-router.post('/', create);
-router.put('/:id', updateItem);
-router.delete('/:id', destroy);
+router.get('/', findAllForTable);
+router.get('/add', getCreate);
+router.post('/add', create);
+router.get('/edit/:id', getUpdate);
+router.post('/edit/:id', updateItem);
+router.get('/delete/:id', destroy);
+router.post('/search', search);
 
 module.exports = router;

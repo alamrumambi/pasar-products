@@ -1,4 +1,6 @@
 const router = require('express').Router();
+const { findAll, findById } = require('../controllers/itemController');
+
 
 router.use('/users', require('./user'));
 router.post('/search', (req, res) => {
@@ -8,6 +10,8 @@ router.post('/search', (req, res) => {
         res.redirect('/');
     }
 })
-router.use('/', require('./item'));
+router.use('/items', require('./item'));
+router.get('/', findAll);
+router.get('/:id', findById);
 
 module.exports = router;

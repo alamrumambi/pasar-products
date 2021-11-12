@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zxx">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <title>Harga Pangan</title>
+  <meta name="description" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Web Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+
+  <!-- ========================= CSS here ========================= -->
+  <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/assets/css/LineIcons.2.0.css" />
+  <link rel="stylesheet" href="/assets/css/animate.css" />
+  <link rel="stylesheet" href="/assets/css/tiny-slider.css" />
+  <link rel="stylesheet" href="/assets/css/glightbox.min.css" />
+  <link rel="stylesheet" href="/assets/css/main.css" />
+  <script src='https://api.mapbox.com/mapbox-gl-js/v2.6.0/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v2.6.0/mapbox-gl.css' rel='stylesheet' />
+
+</head>
+
+<body>
+  <!-- Preloader -->
+  <div class="preloader">
+    <div class="preloader-inner">
+      <div class="preloader-icon">
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+  <!-- /End Preloader -->
+
+  <!-- Start Header Area -->
+  <header class="header navbar-area">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-12">
+          <div class="nav-inner">
+            <nav class="navbar navbar-expand-lg">
+              <a class="navbar-brand" href="">
+              </a>
+              <button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="toggler-icon"></span>
+                <span class="toggler-icon"></span>
+                <span class="toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse sub-menu-bar" style="height: 50px;" id="navbarSupportedContent">
+                <ul id="nav" class="navbar-nav ms-auto">
+                  <li class="nav-item">
+                    <a class=" active dd-menu collapsed" style="padding: 20px;" href="/">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a style="padding: 20px;" href="" aria-label="Toggle navigation">Tambah Data</a>
+                    <ul class="sub-menu collapse" id="submenu-1-3">
+                      <li class="nav-item"><a href="/users/register">Tambah User</a></li>
+                      <li class="nav-item"><a href="/items/add">Tambah Item Pasar</a></li>
+                    </ul>
+                  </li>
+                  <li class="nav-item">
+                    <a style="padding: 20px;" href="" aria-label="Toggle navigation">Manajemen</a>
+                    <ul class="sub-menu collapse" id="submenu-1-3">
+                      <li class="nav-item"><a href="/users">Manajemen User</a></li>
+                      <li class="nav-item"><a href="/items">Manajemen Item Pasar</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+              <!-- navbar collapse -->
+              <div class="login-button">
+                <ul>
+                  <li>
+                    <a href="/users/logout"><i class="lni lni-exit"></i> Logout</a>
+                  </li>
+                </ul>
+              </div>
+            </nav>
+            <!-- navbar -->
+          </div>
+        </div>
+      </div>
+      <!-- row -->
+    </div>
+    <!-- container -->
+  </header>
+  <!-- End Header Area -->
+
+  <!-- User Form -->
+  <div class="login-form">
+    <h1><%=action%> Item</h1>
+    <form encType="multipart/form-data" action="<%= action === 'Tambah' ? '/items/add' : '/items/edit/' + item.id%>" method="post">
+      <% if (error) { %>
+      <div class="alert alert-danger" role="alert">
+        <%= error %>
+      </div>
+      <% } %>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Nama</label>
+        <input value="<%=item && item.name ? item.name: ''%>" required name="name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan nama">
+      </div><br>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Harga Bersehati</label>
+        <input value="<%=item && (item.market1 || (item.Markets && item.Markets[0].ItemMarket.price)) ? item.market1 || item.Markets[0].ItemMarket.price: ''%>" required name="market1" type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan harga">
+      </div><br>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Harga Karombasan</label>
+        <input value="<%=item && (item.market2 || (item.Markets && item.Markets[1].ItemMarket.price)) ? item.market2 || item.Markets[1].ItemMarket.price: ''%>" required name="market2" type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan harga">
+      </div><br>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Satuan</label>
+        <select name="unitName" id="" class="form-select">
+          <option value="">Pilih Satuan</option>
+          <option <%= item && item.unitName === 'Kg'? 'selected': '' %> value="Kg">Kg</option>
+          <option <%= item && item.unitName === 'ons'? 'selected': '' %> value="ons">ons</option>
+          <option <%= item && item.unitName === 'Litter'? 'selected': '' %> value="Litter">Litter</option>
+          <option <%= item && item.unitName === 'ml'? 'selected': '' %> value="ml">ml</option>
+          <option <%= item && item.unitName === 'pcs'? 'selected': '' %> value="pcs">pcs</option> 
+        </select>
+      </div><br>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Upload Gambar</label>
+        <input type="file" name="file" />
+      </div><br>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+
+  <!-- ========================= JS here ========================= -->
+  <script src="/assets/js/bootstrap.min.js"></script>
+  <script src="/assets/js/wow.min.js"></script>
+  <script src="/assets/js/tiny-slider.js"></script>
+  <script src="/assets/js/glightbox.min.js"></script>
+  <script src="/assets/js/main.js"></script>
+</body>
+
+</html>
